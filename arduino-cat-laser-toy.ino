@@ -7,6 +7,9 @@ Servo tilt; // top/botom max position = 10-50
 
 int pinLaser = 2;
 int iRandomTilt, iRandomPan;
+int iOldTilt = 20;
+int iOldPan = 70;
+int angleT, angleP;
 
 void setup() {
   
@@ -25,13 +28,34 @@ void setup() {
 
 void loop() {
   // New random values for tilt & pan
-  iRandomTilt = random(10, 80);
-  iRandomPan = random(70, 130);
-  
-  tilt.write(iRandomTilt);
-  delay(1500);
-  
-  pan.write(iRandomPan);
-  delay(1500);
+  iRandomTilt = random(30, 90);
+  iRandomPan = random(60, 140);
+
+  if (iOldTilt < iRandomTilt) {
+    for(angleT = iOldTilt; angleT < iRandomTilt; angleT++) {                                  
+      tilt.write(angleT);               
+      delay(20);                   
+    } 
+  } else {
+    for(angleT = iOldTilt; angleT > iRandomTilt; angleT--) {                                  
+      tilt.write(angleT);               
+      delay(20);                   
+    } 
+  }
+
+  if (iOldPan < iRandomTilt) {
+    for(angleP = iOldPan; angleP < iRandomPan; angleP++) {                                  
+      pan.write(angleP);               
+      delay(20);                   
+    } 
+  } else {
+    for(angleP = iOldPan; angleP > iRandomPan; angleP--) {                                  
+      pan.write(angleP);               
+      delay(20);                   
+    } 
+  }
+
+  iOldTilt = iRandomTilt;
+  iOldPan = iRandomPan;
 
 }
